@@ -132,6 +132,11 @@
 @property (nonatomic) CGFloat accesoryImageSize;
 
 /**
+ *  Set your custom text storage
+ */
+@property (strong, nonatomic) NSTextStorage *customTextStorage;
+
+/**
  *  Returns the underlying gesture recognizer for long press gestures in the cell.
  *  This gesture handles the copy action for the cell.
  *  Access this property when you need to override or more precisely control the long press gesture.

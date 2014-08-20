@@ -453,8 +453,21 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
         NSString *messageText = [messageData text];
         NSParameterAssert(messageText != nil);
         
-        cell.textView.text = messageText;
-        cell.textView.dataDetectorTypes = UIDataDetectorTypeAll;
+        if (self.customTextStorageClassName)
+        {
+            NSDictionary *attributes = @{
+                                         NSFontAttributeName : self.collectionView.collectionViewLayout.messageBubbleFont
+                                         };
+            NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:messageText attributes:attributes];
+            NSTextStorage *customStorage = [NSClassFromString(self.customTextStorageClassName) new];
+            cell.customTextStorage = customStorage;
+            [cell.customTextStorage replaceCharactersInRange:NSMakeRange(0, 0) withAttributedString:attributedString];
+        }
+        else
+        {
+            cell.textView.text = messageText;
+            cell.textView.dataDetectorTypes = UIDataDetectorTypeAll;
+        }
     }
     else
     {

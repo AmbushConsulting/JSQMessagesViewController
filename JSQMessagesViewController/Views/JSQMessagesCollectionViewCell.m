@@ -168,6 +168,7 @@
     self.cellTopLabel.text = nil;
     self.messageBubbleTopLabel.text = nil;
     self.cellBottomLabel.text = nil;
+    self.customTextStorage = nil;
 }
 
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
@@ -309,6 +310,16 @@
     NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:self.accessoryImageView attribute:NSLayoutAttributeHeight relatedBy:0 toItem:self.accessoryImageView attribute:NSLayoutAttributeWidth multiplier:1 constant:0];
     
     [self.accessoryImageView addConstraints:@[widhtConstraint, heightConstraint]];
+}
+
+
+-(void)setCustomTextStorage:(NSTextStorage *)customTextStorage
+{
+    if (_customTextStorage != customTextStorage)
+    {
+        _customTextStorage = customTextStorage;
+        [_customTextStorage addLayoutManager:self.textView.layoutManager];
+    }
 }
 
 #pragma mark - Getters

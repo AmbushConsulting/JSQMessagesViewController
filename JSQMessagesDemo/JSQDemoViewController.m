@@ -19,6 +19,8 @@
 #import "JSQDemoViewController.h"
 #import "JSQImagePicker.h"
 
+#import "VHighlightingTextStorage.h"
+
 static NSString * const kJSQDemoAvatarNameCook = @"Tim Cook";
 static NSString * const kJSQDemoAvatarNameJobs = @"Jobs";
 static NSString * const kJSQDemoAvatarNameWoz = @"Steve Wozniak";
@@ -38,10 +40,7 @@ static NSString * const kJSQDemoAvatarNameWoz = @"Steve Wozniak";
     self.messages = [[NSMutableArray alloc] initWithObjects:
                      [[JSQMessage alloc] initWithText:@"Welcome to JSQMessages: A messaging UI framework for iOS." sender:self.sender date:[NSDate distantPast]],
                      [[JSQMessage alloc] initWithText:@"It is simple, elegant, and easy to use. There are super sweet default settings, but you can customize like crazy." sender:kJSQDemoAvatarNameWoz date:[NSDate distantPast]],
-                     [[JSQMessage alloc] initWithText:@"It even has data detectors. You can call me tonight. My cell number is 123-456-7890. My website is www.hexedbits.com." sender:self.sender date:[NSDate distantPast]],
-                     [[JSQMessage alloc] initWithText:@"JSQMessagesViewController is nearly an exact replica of the iOS Messages App. And perhaps, better." sender:kJSQDemoAvatarNameJobs date:[NSDate date]],
-                     [[JSQMessage alloc] initWithText:@"It is unit-tested, free, and open-source." sender:kJSQDemoAvatarNameCook date:[NSDate date]],
-                     [[JSQMessage alloc] initWithText:@"Oh, and there's sweet documentation." sender:self.sender date:[NSDate date]],
+                     [[JSQMessage alloc] initWithText:@"Try to click this: www.die.com" sender:self.sender date:[NSDate distantPast]],
                      [JSQMessage messageWithImage:[UIImage imageNamed:@"keepcalm"] sender:kJSQDemoAvatarNameCook],
                      nil];
     /**
@@ -139,6 +138,8 @@ static NSString * const kJSQDemoAvatarNameWoz = @"Steve Wozniak";
     
     self.picker = [JSQImagePicker new];
     
+    self.customTextStorageClassName = NSStringFromClass([VHighlightingTextStorage class]);
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"typing"]
                                                                               style:UIBarButtonItemStyleBordered
                                                                              target:self
@@ -166,6 +167,14 @@ static NSString * const kJSQDemoAvatarNameWoz = @"Steve Wozniak";
      *  Note: this feature is mostly stable, but still experimental
      */
     self.collectionView.collectionViewLayout.springinessEnabled = NO;
+}
+
+#pragma mark - TextView
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
+{
+    NSLog(@"It actually works");
+    return YES;
 }
 
 #pragma mark - Actions
@@ -413,15 +422,21 @@ static NSString * const kJSQDemoAvatarNameWoz = @"Steve Wozniak";
     {
         JSQMessagesCollectionViewCell *textCell = (JSQMessagesCollectionViewCell *) cell;
         
+        textCell.textView.selectable = YES;
+        textCell.textView.editable = NO;
+        textCell.textView.delegate = self;
+        
+        UIColor *wantedColor;
         if ([msg.sender isEqualToString:self.sender]) {
-            textCell.textView.textColor = [UIColor blackColor];
+            wantedColor = [UIColor blackColor];
         }
         else {
-            textCell.textView.textColor = [UIColor whiteColor];
+            wantedColor = [UIColor whiteColor];
         }
-        
-        textCell.textView.linkTextAttributes = @{ NSForegroundColorAttributeName : textCell.textView.textColor,
-                                              NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
+
+        [textCell.customTextStorage addAttribute:NSForegroundColorAttributeName
+                                           value:wantedColor
+                                           range:NSMakeRange(0, textCell.customTextStorage.length)];
     }
     
     return cell;

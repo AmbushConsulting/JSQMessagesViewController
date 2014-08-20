@@ -129,6 +129,8 @@
  */
 @property (assign, nonatomic) CGFloat topContentAdditionalInset;
 
+@property (nonatomic, copy) NSString *customTextStorageClassName;
+
 #pragma mark - Class methods
 
 /**
