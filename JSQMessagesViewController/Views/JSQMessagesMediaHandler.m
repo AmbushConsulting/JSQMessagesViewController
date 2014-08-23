@@ -29,8 +29,9 @@
 -(void)setCell:(JSQMessagesCollectionViewCell *)cell
 {
     _cell = cell;
-    
-    cell.mediaImageView.contentMode = UIViewContentModeScaleAspectFill;
+
+    cell.mediaImageView.contentMode = UIViewContentModeCenter;
+    cell.mediaImageView.backgroundColor = [UIColor colorWithRed:0.925 green:0.925 blue:0.925 alpha:1] /*#ececec*/;
     cell.mediaImageView.clipsToBounds = YES;
 }
 
