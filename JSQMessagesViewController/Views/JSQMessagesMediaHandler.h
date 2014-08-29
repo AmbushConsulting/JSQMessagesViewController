@@ -14,6 +14,8 @@
 
 + (instancetype)mediaHandlerWithCell:(JSQMessagesCollectionViewCell *)cell;
 
+- (void)addOverlayView:(UIView *)view;
+
 - (void) setMediaFromImage:(UIImage *)image;
 - (void) setMediaFromURL:(NSURL *)imageURL;
 

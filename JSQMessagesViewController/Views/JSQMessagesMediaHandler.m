@@ -29,10 +29,14 @@
 -(void)setCell:(JSQMessagesCollectionViewCell *)cell
 {
     _cell = cell;
-
+    
     cell.mediaImageView.contentMode = UIViewContentModeCenter;
     cell.mediaImageView.backgroundColor = [UIColor colorWithRed:0.925 green:0.925 blue:0.925 alpha:1] /*#ececec*/;
     cell.mediaImageView.clipsToBounds = YES;
+}
+
+- (void) addOverlayView:(UIView *)view{
+    [self.cell addSubview:view];
 }
 
 - (void) setMediaFromImage:(UIImage *)image;
