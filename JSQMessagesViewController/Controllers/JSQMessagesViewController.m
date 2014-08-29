@@ -47,8 +47,8 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 
 
 @interface JSQMessagesViewController () <JSQMessagesInputToolbarDelegate,
-                                         JSQMessagesCollectionViewCellDelegate,
-                                         JSQMessagesKeyboardControllerDelegate>
+JSQMessagesCollectionViewCellDelegate,
+JSQMessagesKeyboardControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet JSQMessagesCollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet JSQMessagesInputToolbar *inputToolbar;
@@ -134,7 +134,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     
     self.outgoingMediaCellIdentifier = [JSQMessagesCollectionViewCellOutgoingMedia cellReuseIdentifier];
     self.incomingMediaCellIdentifier = [JSQMessagesCollectionViewCellIncomingMedia cellReuseIdentifier];;
-
+    
     self.typingIndicatorColor = [UIColor jsq_messageBubbleLightGrayColor];
     self.showTypingIndicator = NO;
     
@@ -413,7 +413,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     
     JSQMessagesCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.delegate = self;
-
+    
     cell.messageBubbleImageView = [collectionView.dataSource collectionView:collectionView bubbleImageViewForItemAtIndexPath:indexPath];
     cell.avatarImageView = [collectionView.dataSource collectionView:collectionView avatarImageViewForItemAtIndexPath:indexPath];
     cell.cellTopLabel.attributedText = [collectionView.dataSource collectionView:collectionView attributedTextForCellTopLabelAtIndexPath:indexPath];
@@ -428,7 +428,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     }
     
     CGFloat bubbleTopLabelInset = 60.0f;
-
+    
     if (isOutgoingMessage)
     {
         cell.messageBubbleTopLabel.textInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, bubbleTopLabelInset);
@@ -447,7 +447,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     }
     
     cell.backgroundColor = [UIColor clearColor];
-
+    
     if (messageData.kind == JSQMessageTextKind)
     {
         NSString *messageText = [messageData text];
@@ -484,7 +484,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
             [mediaHandler setMediaFromURL:messageData.url];
         }
     }
-
+    
     return cell;
 }
 
@@ -730,7 +730,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
             CGSize newContentSize = [[change objectForKey:NSKeyValueChangeNewKey] CGSizeValue];
             
             CGFloat dy = newContentSize.height - oldContentSize.height;
-        
+            
             [self jsq_adjustInputToolbarForComposerTextViewContentSizeChange:dy];
             [self jsq_updateCollectionViewInsets];
             if (self.automaticallyScrollsToMostRecentMessage) {
@@ -750,14 +750,14 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
      *  http://www.cocoanetics.com/2011/07/calculating-area-covered-by-keyboard/
      */
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-
+    
     CGRect collectionViewFrame = [window convertRect:self.collectionView.frame
                                             fromView:self.view];
-
+    
     CGRect coveredFrame = CGRectIntersection(collectionViewFrame, keyboardFrame);
-
+    
     coveredFrame = [window convertRect:coveredFrame toView:self.view];
-
+    
     CGFloat heightFromBottom = coveredFrame.size.height;
     heightFromBottom = MAX(0.0f, heightFromBottom + self.statusBarChangeInHeight);
     

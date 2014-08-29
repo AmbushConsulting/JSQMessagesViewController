@@ -24,4 +24,6 @@
 - (void)setOverlayUpdateHandler:(JSQMessagesMediaUpdateHandler)pFunction;
 
 - (void)cellShouldUpdate;
+
+- (BOOL)hasUpdateHandler;
 @end

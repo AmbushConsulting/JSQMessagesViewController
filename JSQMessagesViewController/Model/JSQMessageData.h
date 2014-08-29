@@ -27,10 +27,10 @@ typedef NS_ENUM(NSUInteger, JSQMessageKind) {
 typedef void (^JSQMessagesMediaUpdateHandler)(UIView *);
 
 /**
- *  The `JSQMessageData` protocol defines the common interface through 
+ *  The `JSQMessageData` protocol defines the common interface through
  *  which `JSQMessagesViewController` and `JSQMessagesCollectionView` interacts with message model objects.
  *
- *  It declares the required and optional methods that a class must implement so that instances of that class 
+ *  It declares the required and optional methods that a class must implement so that instances of that class
  *  can be displayed properly with a `JSQMessagesCollectionViewCell`.
  */
 @protocol JSQMessageData <NSObject>
@@ -78,7 +78,9 @@ typedef void (^JSQMessagesMediaUpdateHandler)(UIView *);
 - (UIView *)overlayView;
 
 /**
-*  @return Optional Update Handler for overlayView.
-*/
+ *  @return Optional Update Handler for overlayView.
+ */
 - (JSQMessagesMediaUpdateHandler)updateHandler;
+
+-(NSString *)identity;
 @end
