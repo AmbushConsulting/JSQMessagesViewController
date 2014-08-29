@@ -8,6 +8,7 @@
 
 #import "JSQMessagesMediaHandler.h"
 #import "JSQMessagesCollectionViewCell.h"
+#import "JSQMessageData.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface JSQMessagesMediaHandler ()
@@ -15,6 +16,8 @@
 @property (nonatomic, weak) JSQMessagesCollectionViewCell *cell;
 @property (nonatomic, weak) UIActivityIndicatorView *activityIndicator;
 
+@property(nonatomic, strong) UIView *overlayView;
+@property(nonatomic, copy) JSQMessagesMediaUpdateHandler updateHandler;
 @end
 
 @implementation JSQMessagesMediaHandler
@@ -29,14 +32,15 @@
 -(void)setCell:(JSQMessagesCollectionViewCell *)cell
 {
     _cell = cell;
-    
+
     cell.mediaImageView.contentMode = UIViewContentModeCenter;
     cell.mediaImageView.backgroundColor = [UIColor colorWithRed:0.925 green:0.925 blue:0.925 alpha:1] /*#ececec*/;
     cell.mediaImageView.clipsToBounds = YES;
 }
 
 - (void) addOverlayView:(UIView *)view{
-    [self.cell addSubview:view];
+    self.overlayView = view;
+    [self.cell.mediaImageView addSubview:view];
 }
 
 - (void) setMediaFromImage:(UIImage *)image;
@@ -64,6 +68,8 @@
 {
     self.cell.mediaImageView.image = nil;
     [self.cell.mediaImageView cancelCurrentImageLoad];
+    self.updateHandler = nil;
+    self.overlayView = nil;
     [self removeActitityIndicator];
 }
 
@@ -125,4 +131,11 @@
     self.activityIndicator = nil;
 }
 
+- (void)setOverlayUpdateHandler:(JSQMessagesMediaUpdateHandler)handler {
+    self.updateHandler = handler;
+}
+
+- (void)cellShouldUpdate{
+    self.updateHandler(self.overlayView);
+}
 @end

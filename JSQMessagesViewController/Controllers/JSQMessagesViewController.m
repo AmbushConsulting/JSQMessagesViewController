@@ -473,6 +473,10 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
         
         if (messageData.kind == JSQMessageLocalMediaKind)
         {
+            if(messageData.overlayView) {
+                [mediaHandler addOverlayView:messageData.overlayView];
+                [mediaHandler setOverlayUpdateHandler:messageData.updateHandler];
+            }
             [mediaHandler setMediaFromImage:messageData.image];
         }
         else if (messageData.kind == JSQMessageRemoteMediaKind)

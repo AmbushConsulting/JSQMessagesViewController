@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JSQMessageData.h"
 
 @class JSQMessagesCollectionViewCell;
 
 @interface JSQMessagesMediaHandler : NSObject
-
 + (instancetype)mediaHandlerWithCell:(JSQMessagesCollectionViewCell *)cell;
 
 - (void)addOverlayView:(UIView *)view;
@@ -21,4 +21,7 @@
 
 - (void) cellWillBeReused;
 
+- (void)setOverlayUpdateHandler:(JSQMessagesMediaUpdateHandler)pFunction;
+
+- (void)cellShouldUpdate;
 @end

@@ -24,6 +24,8 @@ typedef NS_ENUM(NSUInteger, JSQMessageKind) {
     JSQMessageRemoteMediaKind,
 };
 
+typedef void (^JSQMessagesMediaUpdateHandler)(UIView *);
+
 /**
  *  The `JSQMessageData` protocol defines the common interface through 
  *  which `JSQMessagesViewController` and `JSQMessagesCollectionView` interacts with message model objects.
@@ -70,4 +72,13 @@ typedef NS_ENUM(NSUInteger, JSQMessageKind) {
  */
 - (UIImage *)image;
 
+/**
+ *  @return Optional UIView of the message.
+ */
+- (UIView *)overlayView;
+
+/**
+*  @return Optional Update Handler for overlayView.
+*/
+- (JSQMessagesMediaUpdateHandler)updateHandler;
 @end
