@@ -7,10 +7,21 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JSQMessageData.h"
 
 @class JSQMessagesCollectionViewCell;
 
+@protocol MediaHandlerRefreshDelegate
+- (void)didExpire;
+@end
+
 @interface JSQMessagesMediaHandler : NSObject
+
+@property(nonatomic, copy) CountDownHandler countDownHandler;
+
+@property(nonatomic, copy) HasExpiredHandler hasExpiredHandler;
+
+@property(nonatomic, strong) id <MediaHandlerRefreshDelegate> refreshDelegate;
 
 + (instancetype)mediaHandlerWithCell:(JSQMessagesCollectionViewCell *)cell;
 
@@ -19,4 +30,5 @@
 
 - (void) cellWillBeReused;
 
+- (void)manageUpdates;
 @end

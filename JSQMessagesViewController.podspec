@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.author        = { 'Jesse Squires' => 'jesse.squires.developer@gmail.com' }
   s.social_media_url    = 'https://twitter.com/jesse_squires'
   s.source        = { :git => 'https://github.com/jessesquires/JSQMessagesViewController.git', :tag => s.version.to_s }
-  s.platform        = :ios, '7.0' 
+  s.platform        = :ios, '7.0'
   s.source_files      = 'JSQMessagesViewController/**/*.{h,m}'
 <<<<<<< HEAD
   s.resources       = 'JSQMessagesViewController/Assets/**/*.{png,aiff}', 'JSQMessagesViewController/**/*.{xib}'

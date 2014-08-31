@@ -15,6 +15,7 @@
 @property (nonatomic, weak) JSQMessagesCollectionViewCell *cell;
 @property (nonatomic, weak) UIActivityIndicatorView *activityIndicator;
 
+@property(nonatomic, strong) CADisplayLink *displayLink;
 @end
 
 @implementation JSQMessagesMediaHandler
@@ -23,6 +24,7 @@
 {
     JSQMessagesMediaHandler *instance = [self new];
     instance.cell = cell;
+
     return instance;
 }
 
@@ -44,12 +46,12 @@
 - (void) setMediaFromURL:(NSURL *)imageURL;
 {
     [self addActitityIndicator];
-    
+
     __weak __typeof(self) weakSelf = self;
-    
+
     [self.cell.mediaImageView setImageWithURL:imageURL
                                     completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                                        
+
                                         __typeof(self) strongSelf = weakSelf;
                                         [strongSelf maskImageViewWithBubble];
                                         [strongSelf removeActitityIndicator];
@@ -61,6 +63,9 @@
     self.cell.mediaImageView.image = nil;
     [self.cell.mediaImageView cancelCurrentImageLoad];
     [self removeActitityIndicator];
+    self.countDownHandler = nil;
+    [self.displayLink invalidate];
+    self.displayLink = nil;
 }
 
 #pragma mark Private
@@ -74,7 +79,7 @@
     [self.cell.mediaImageView removeConstraints:self.cell.mediaImageView.constraints];
     [self.cell layoutIfNeeded];
     [self.cell.mediaImageView setFrame:self.cell.messageBubbleImageView.frame];
-    
+
     /**
      *  Snippet from https://github.com/SocialObjects-Software/SOMessaging
      */
@@ -88,9 +93,9 @@
 {
     UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     [activityIndicator setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
+
     [self.cell.messageBubbleImageView addSubview:activityIndicator];
-    
+
     /**
      *  Center in superview
      */
@@ -102,16 +107,16 @@
                                             metrics:nil
                                               views:variables];
     [self.cell.contentView addConstraints:constraints];
-    
+
     constraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"H:[superview]-(<=1)-[activityIndicator]"
                                             options: NSLayoutFormatAlignAllCenterY
                                             metrics:nil
                                               views:variables];
     [self.cell.contentView addConstraints:constraints];
-    
+
     [activityIndicator startAnimating];
-    
+
     self.activityIndicator = activityIndicator;
 }
 
@@ -119,6 +124,24 @@
 {
     [self.activityIndicator removeFromSuperview];
     self.activityIndicator = nil;
+}
+
+- (void)manageUpdates {
+    if (self.countDownHandler) {
+        self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateTimer)];
+        self.displayLink.frameInterval = 60;
+        [self.displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    }
+}
+
+- (void)updateTimer {
+    if (self.hasExpiredHandler) {
+        if (self.hasExpiredHandler()) {
+            if (self.refreshDelegate) [self.refreshDelegate didExpire];
+        } else {
+            self.countDownHandler(self.cell.cellBottomLabel);
+        }
+    }
 }
 
 @end

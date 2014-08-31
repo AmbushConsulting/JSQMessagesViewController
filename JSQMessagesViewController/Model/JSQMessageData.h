@@ -27,11 +27,14 @@ typedef NS_ENUM(NSUInteger, JSQMessageKind) {
     JSQMessageRemoteMediaKind,
 };
 
+typedef void (^CountDownHandler)(UIView *);
+typedef BOOL (^HasExpiredHandler)();
+
 /**
- *  The `JSQMessageData` protocol defines the common interface through 
+ *  The `JSQMessageData` protocol defines the common interface through
  *  which `JSQMessagesViewController` and `JSQMessagesCollectionView` interacts with message model objects.
  *
- *  It declares the required and optional methods that a class must implement so that instances of that class 
+ *  It declares the required and optional methods that a class must implement so that instances of that class
  *  can be displayed properly with a `JSQMessagesCollectionViewCell`.
  */
 @protocol JSQMessageData <NSObject>
@@ -72,6 +75,11 @@ typedef NS_ENUM(NSUInteger, JSQMessageKind) {
  *  @return UIImage of the message.
  */
 - (UIImage *)image;
+
+
+- (BOOL) shouldCountDown;
+- (HasExpiredHandler) hasExpiredHandler;
+- (CountDownHandler)countDownHandler;
 
 @end
 
