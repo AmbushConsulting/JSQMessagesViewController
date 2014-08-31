@@ -80,6 +80,7 @@ typedef BOOL (^HasExpiredHandler)();
 - (BOOL) shouldCountDown;
 - (HasExpiredHandler) hasExpiredHandler;
 - (CountDownHandler)countDownHandler;
+- (NSString *)footerString;
 
 @end
 

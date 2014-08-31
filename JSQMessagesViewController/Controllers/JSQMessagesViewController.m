@@ -375,7 +375,12 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
 {
-    return nil;
+    id<JSQMessageData> messageData = [collectionView.dataSource collectionView:collectionView messageDataForItemAtIndexPath:indexPath];
+    if ([messageData respondsToSelector:@selector(footerString)]) {
+        return [[NSAttributedString alloc] initWithString:messageData.footerString];
+    } else {
+        return nil;
+    }
 }
 
 -(UIImage *)collectionView:(JSQMessagesCollectionView *)collectionView accesoryViewForCellAtIndexPath:(NSIndexPath *)indexPath
@@ -606,7 +611,12 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 0.0f;
+    id<JSQMessageData> messageData = [collectionView.dataSource collectionView:collectionView messageDataForItemAtIndexPath:indexPath];
+    if ([messageData respondsToSelector:@selector(footerString)]) {
+        return 20.0f;
+    } else {
+        return 0.0f;
+    }
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView
