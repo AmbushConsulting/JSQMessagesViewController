@@ -27,61 +27,58 @@ typedef NS_ENUM(NSUInteger, JSQMessageKind) {
     JSQMessageRemoteMediaKind,
 };
 
-typedef void (^CountDownHandler)(UIView *);
-typedef BOOL (^HasExpiredHandler)();
-
+typedef void (^DidFinishCountingDownHandler)();
 /**
- *  The `JSQMessageData` protocol defines the common interface through
- *  which `JSQMessagesViewController` and `JSQMessagesCollectionView` interacts with message model objects.
- *
- *  It declares the required and optional methods that a class must implement so that instances of that class
- *  can be displayed properly with a `JSQMessagesCollectionViewCell`.
- */
+*  The `JSQMessageData` protocol defines the common interface through
+*  which `JSQMessagesViewController` and `JSQMessagesCollectionView` interacts with message model objects.
+*
+*  It declares the required and optional methods that a class must implement so that instances of that class
+*  can be displayed properly with a `JSQMessagesCollectionViewCell`.
+*/
 @protocol JSQMessageData <NSObject>
 
 @required
 
 /**
- *  @return The message kind.
- *  @warning Must also conform to the optionals below.
- */
+*  @return The message kind.
+*  @warning Must also conform to the optionals below.
+*/
 - (JSQMessageKind) kind;
 
 /**
- *  @return The name of the user who sent the message.
- *  @warning You must not return `nil` from this method.
- */
+*  @return The name of the user who sent the message.
+*  @warning You must not return `nil` from this method.
+*/
 - (NSString *)sender;
 
 /**
- *  @return The date that the message was sent.
- *  @warning You must not return `nil` from this method.
- */
+*  @return The date that the message was sent.
+*  @warning You must not return `nil` from this method.
+*/
 - (NSDate *)date;
 
 @optional
 
 /**
- *  @return The body text of the message.
- */
+*  @return The body text of the message.
+*/
 - (NSString *)text;
 
 /**
- *  @return URL for the remote media on the message.
- */
+*  @return URL for the remote media on the message.
+*/
 - (NSURL *)url;
 
 /**
- *  @return UIImage of the message.
- */
+*  @return UIImage of the message.
+*/
 - (UIImage *)image;
 
-
-- (BOOL) shouldCountDown;
-- (HasExpiredHandler) hasExpiredHandler;
-- (CountDownHandler)countDownHandler;
 - (NSString *)footerString;
 
+- (NSDate *) expirationDate;
+
+- (DidFinishCountingDownHandler)countDownExpirationHander;
 @end
 
 #endif

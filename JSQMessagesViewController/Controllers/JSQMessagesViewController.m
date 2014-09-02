@@ -100,8 +100,6 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 
 #pragma mark - Class methods
 
-@property(nonatomic, strong) id <JSQMessageData> messageData;
-
 + (UINib *)nib
 {
     return [UINib nibWithNibName:NSStringFromClass([JSQMessagesViewController class])
@@ -487,8 +485,8 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
         {
             JSQMessagesCollectionViewCellIncomingMedia *mediaCell = (JSQMessagesCollectionViewCellIncomingMedia *) cell;
             mediaHandler = mediaCell.mediaHandler;
-            mediaHandler.countDownHandler = messageData.countDownHandler;
-            mediaHandler.hasExpiredHandler = messageData.hasExpiredHandler;
+            mediaHandler.expirationDate = messageData.expirationDate;
+            mediaHandler.didFinishCountingDownHandler = messageData.countDownExpirationHander;
             mediaHandler.refreshDelegate = self;
             [mediaHandler manageUpdates];
         }

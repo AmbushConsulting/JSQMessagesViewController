@@ -16,6 +16,7 @@
 @property (nonatomic, weak) UIActivityIndicatorView *activityIndicator;
 
 @property(nonatomic, strong) CADisplayLink *displayLink;
+@property(nonatomic) SEL updateSelector;
 @end
 
 @implementation JSQMessagesMediaHandler
@@ -63,7 +64,7 @@
     self.cell.mediaImageView.image = nil;
     [self.cell.mediaImageView cancelCurrentImageLoad];
     [self removeActitityIndicator];
-    self.countDownHandler = nil;
+    self.expirationDate = nil;
     [self.displayLink invalidate];
     self.displayLink = nil;
 }
@@ -127,21 +128,67 @@
 }
 
 - (void)manageUpdates {
-    if (self.countDownHandler) {
-        self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateTimer)];
+    if (self.expirationDate) {
+        self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(metaUpdate)];
         self.displayLink.frameInterval = 60;
         [self.displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     }
 }
 
-- (void)updateTimer {
-    if (self.hasExpiredHandler) {
-        if (self.hasExpiredHandler()) {
-            if (self.refreshDelegate) [self.refreshDelegate didExpire];
-        } else {
-            self.countDownHandler(self.cell.cellBottomLabel);
-        }
+- (void)metaUpdate{
+    [self updateTimer];
+    if(self.updateSelector) {
+        [self performSelector:self.updateSelector];
     }
+}
+
+- (void)drawNewLabel{
+    self.cell.cellBottomLabel.text = self.expirationString;
+}
+
+- (void) killLabelUpdates{
+    self.didFinishCountingDownHandler();
+    [self.displayLink invalidate];
+    [self.displayLink removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    self.displayLink = nil;
+        if (self.refreshDelegate) {
+        [self.refreshDelegate didExpire];
+    }
+}
+- (void)updateTimer {
+    if (self.hasExpired) {
+        self.updateSelector = @selector(killLabelUpdates);
+    } else {
+        self.updateSelector = @selector(drawNewLabel);
+    }
+}
+
+- (BOOL)hasExpired {
+    return [self.expirationDate timeIntervalSinceDate:[NSDate date]] <= 0;
+}
+
+- (NSString *)expirationString {
+    return self.remainingTimeString;
+}
+
+
+- (NSString *)remainingTimeString {
+    int seconds = self.remainingTimeInterval;
+
+    int hours = floor(seconds /  (60 * 60) );
+
+    float minute_divisor = seconds % (60 * 60);
+    int minutes = floor(minute_divisor / 60);
+
+    float seconds_divisor = seconds % 60;
+    seconds = ceil(seconds_divisor);
+
+    return [NSString stringWithFormat:@"%02d:%02d:%02d", hours, minutes, seconds ];
+}
+
+
+- (int)remainingTimeInterval {
+    return (int) [self.expirationDate timeIntervalSinceDate:[NSDate date]];
 }
 
 @end

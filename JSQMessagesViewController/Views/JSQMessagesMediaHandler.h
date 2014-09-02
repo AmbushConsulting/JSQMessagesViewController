@@ -17,11 +17,11 @@
 
 @interface JSQMessagesMediaHandler : NSObject
 
-@property(nonatomic, copy) CountDownHandler countDownHandler;
-
-@property(nonatomic, copy) HasExpiredHandler hasExpiredHandler;
-
 @property(nonatomic, strong) id <MediaHandlerRefreshDelegate> refreshDelegate;
+
+@property(nonatomic, strong) NSDate *expirationDate;
+
+@property(nonatomic, copy) DidFinishCountingDownHandler didFinishCountingDownHandler;
 
 + (instancetype)mediaHandlerWithCell:(JSQMessagesCollectionViewCell *)cell;
 
