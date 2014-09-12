@@ -11,13 +11,8 @@ Pod::Spec.new do |s|
   s.source        = { :git => 'https://github.com/jessesquires/JSQMessagesViewController.git', :tag => s.version.to_s }
   s.platform        = :ios, '7.0'
   s.source_files      = 'JSQMessagesViewController/**/*.{h,m}'
-<<<<<<< HEAD
   s.resources       = 'JSQMessagesViewController/Assets/**/*.{png,aiff}', 'JSQMessagesViewController/**/*.{xib}'
   s.frameworks      = 'QuartzCore', 'CoreGraphics'
-=======
-  s.resources       = 'JSQMessagesViewController/Assets/**', 'JSQMessagesViewController/**/*.{xib}'
-  s.frameworks      = 'QuartzCore'
->>>>>>> [#00] Upped version
   s.requires_arc      = true
 
   s.dependency 'JSQSystemSoundPlayer'
