@@ -50,8 +50,8 @@
 
     __weak __typeof(self) weakSelf = self;
 
-    [self.cell.mediaImageView setImageWithURL:imageURL
-                                    completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+    [self.cell.mediaImageView sd_setImageWithURL:imageURL
+                                    completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *innerImageURL) {
 
                                         __typeof(self) strongSelf = weakSelf;
                                         [strongSelf maskImageViewWithBubble];
@@ -143,7 +143,11 @@
 }
 
 - (void)drawNewLabel{
-    self.cell.cellBottomLabel.text = self.expirationString;
+    if([self withinDisplayParameters]){
+        self.cell.cellBottomLabel.text = self.expirationString;
+    }else{
+        self.cell.cellBottomLabel.text = @"";
+    }
 }
 
 - (void) killLabelUpdates{
@@ -165,6 +169,16 @@
 
 - (BOOL)hasExpired {
     return [self.expirationDate timeIntervalSinceDate:[NSDate date]] <= 0;
+}
+
+- (BOOL)withinDisplayParameters{
+    if ([self hasExpired])             return NO;
+    if ([self moreThan5MinutesRemain]) return NO;
+    return YES;
+}
+
+- (BOOL)moreThan5MinutesRemain {
+    return [self.expirationDate timeIntervalSinceDate:[NSDate date]] > 300;
 }
 
 - (NSString *)expirationString {
