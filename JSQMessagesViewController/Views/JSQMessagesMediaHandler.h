@@ -25,6 +25,8 @@
 
 + (instancetype)mediaHandlerWithCell:(JSQMessagesCollectionViewCell *)cell;
 
+- (void)setCellBGColor:(UIColor *)color;
+
 - (void) setMediaFromImage:(UIImage *)image;
 - (void) setMediaFromURL:(NSURL *)imageURL;
 

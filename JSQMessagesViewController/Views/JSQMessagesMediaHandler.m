@@ -25,16 +25,20 @@
 {
     JSQMessagesMediaHandler *instance = [self new];
     instance.cell = cell;
-
+    
     return instance;
+}
+
+- (void)setCellBGColor:(UIColor *)color{
+    _cell.mediaImageView.backgroundColor = color;
 }
 
 -(void)setCell:(JSQMessagesCollectionViewCell *)cell
 {
     _cell = cell;
-
+    
     cell.mediaImageView.contentMode = UIViewContentModeCenter;
-    cell.mediaImageView.backgroundColor = [UIColor colorWithRed:0.925 green:0.925 blue:0.925 alpha:1] /*#ececec*/;
+    cell.mediaImageView.backgroundColor = [UIColor colorWithRed:214/255.0f green:0.0f blue:255/255.0f alpha:1] /*#ececec*/;
     cell.mediaImageView.clipsToBounds = YES;
 }
 
@@ -47,16 +51,16 @@
 - (void) setMediaFromURL:(NSURL *)imageURL;
 {
     [self addActitityIndicator];
-
+    
     __weak __typeof(self) weakSelf = self;
-
+    
     [self.cell.mediaImageView sd_setImageWithURL:imageURL
-                                    completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *innerImageURL) {
-
-                                        __typeof(self) strongSelf = weakSelf;
-                                        [strongSelf maskImageViewWithBubble];
-                                        [strongSelf removeActitityIndicator];
-                                    }];
+                                       completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *innerImageURL) {
+                                           
+                                           __typeof(self) strongSelf = weakSelf;
+                                           [strongSelf maskImageViewWithBubble];
+                                           [strongSelf removeActitityIndicator];
+                                       }];
 }
 
 - (void) cellWillBeReused;
@@ -80,7 +84,7 @@
     [self.cell.mediaImageView removeConstraints:self.cell.mediaImageView.constraints];
     [self.cell layoutIfNeeded];
     [self.cell.mediaImageView setFrame:self.cell.messageBubbleImageView.frame];
-
+    
     /**
      *  Snippet from https://github.com/SocialObjects-Software/SOMessaging
      */
@@ -94,9 +98,9 @@
 {
     UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     [activityIndicator setTranslatesAutoresizingMaskIntoConstraints:NO];
-
+    
     [self.cell.messageBubbleImageView addSubview:activityIndicator];
-
+    
     /**
      *  Center in superview
      */
@@ -108,16 +112,16 @@
                                             metrics:nil
                                               views:variables];
     [self.cell.contentView addConstraints:constraints];
-
+    
     constraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"H:[superview]-(<=1)-[activityIndicator]"
                                             options: NSLayoutFormatAlignAllCenterY
                                             metrics:nil
                                               views:variables];
     [self.cell.contentView addConstraints:constraints];
-
+    
     [activityIndicator startAnimating];
-
+    
     self.activityIndicator = activityIndicator;
 }
 
@@ -155,7 +159,7 @@
     [self.displayLink invalidate];
     [self.displayLink removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     self.displayLink = nil;
-        if (self.refreshDelegate) {
+    if (self.refreshDelegate) {
         [self.refreshDelegate didExpire];
     }
 }
@@ -188,15 +192,15 @@
 
 - (NSString *)remainingTimeString {
     int seconds = self.remainingTimeInterval;
-
+    
     int hours = floor(seconds /  (60 * 60) );
-
+    
     float minute_divisor = seconds % (60 * 60);
     int minutes = floor(minute_divisor / 60);
-
+    
     float seconds_divisor = seconds % 60;
     seconds = ceil(seconds_divisor);
-
+    
     return [NSString stringWithFormat:@"%02d:%02d:%02d", hours, minutes, seconds ];
 }
 
