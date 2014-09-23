@@ -45,14 +45,14 @@
 {
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     
-    CGFloat cornerRadius = 6.0f;
+//    CGFloat cornerRadius = 6.0f;
     
     self.backgroundColor = [UIColor whiteColor];
-    self.layer.borderWidth = 0.5f;
-    self.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    self.layer.cornerRadius = cornerRadius;
+//    self.layer.borderWidth = 0.5f;
+//    self.layer.borderColor = [UIColor lightGrayColor].CGColor;
+//    self.layer.cornerRadius = cornerRadius;
     
-    self.scrollIndicatorInsets = UIEdgeInsetsMake(cornerRadius, 0.0f, cornerRadius, 0.0f);
+//    self.scrollIndicatorInsets = UIEdgeInsetsMake(cornerRadius, 0.0f, cornerRadius, 0.0f);
     
     self.textContainerInset = UIEdgeInsetsMake(4.0f, 2.0f, 4.0f, 2.0f);
     self.contentInset = UIEdgeInsetsMake(2.0f, 0.0f, 2.0f, 0.0f);
@@ -61,7 +61,7 @@
     self.scrollsToTop = NO;
     self.userInteractionEnabled = YES;
     
-    self.font = [UIFont systemFontOfSize:16.0f];
+    self.font = [UIFont fontWithName:@"Avenir-Light" size:14];
     self.textColor = [UIColor blackColor];
     self.textAlignment = NSTextAlignmentLeft;
     

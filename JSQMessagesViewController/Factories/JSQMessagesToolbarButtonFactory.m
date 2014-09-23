@@ -36,7 +36,7 @@
     
     cameraButton.contentMode = UIViewContentModeScaleAspectFit;
     cameraButton.backgroundColor = [UIColor clearColor];
-    cameraButton.tintColor = [UIColor lightGrayColor];
+    cameraButton.tintColor = [UIColor colorWithRed:183/255.0f green:184/255.0f blue:184/255.0f alpha:1.0f];
     
     return cameraButton;
 }
@@ -44,14 +44,17 @@
 + (UIButton *)defaultSendButtonItem
 {
     NSString *sendTitle = NSLocalizedString(@"Send", @"Text for the send button on the messages view toolbar");
-    
+
+
+
     UIButton *sendButton = [[UIButton alloc] initWithFrame:CGRectZero];
     [sendButton setTitle:sendTitle forState:UIControlStateNormal];
-    [sendButton setTitleColor:[UIColor jsq_messageBubbleBlueColor] forState:UIControlStateNormal];
-    [sendButton setTitleColor:[[UIColor jsq_messageBubbleBlueColor] jsq_colorByDarkeningColorWithValue:0.1f] forState:UIControlStateHighlighted];
-    [sendButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
-    
+    [sendButton setTitleColor:[UIColor colorWithRed:89/255.0f green:186/255.0f blue:209/255.0f alpha:1.0f] forState:UIControlStateNormal];
+    [sendButton setTitleColor:[[UIColor colorWithRed:89/255.0f green:186/255.0f blue:209/255.0f alpha:1.0f] jsq_colorByDarkeningColorWithValue:0.1f] forState:UIControlStateHighlighted];
+    [sendButton setTitleColor:[UIColor colorWithRed:183/255.0f green:184/255.0f blue:184/255.0f alpha:1.0f] forState:UIControlStateDisabled];
+
     sendButton.titleLabel.font = [UIFont boldSystemFontOfSize:17.0f];
+    sendButton.titleLabel.font = [UIFont fontWithName:@"Avenir-Light" size:17];
     sendButton.contentMode = UIViewContentModeCenter;
     sendButton.backgroundColor = [UIColor clearColor];
     sendButton.tintColor = [UIColor jsq_messageBubbleBlueColor];
