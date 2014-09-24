@@ -438,8 +438,8 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     } else {
         [cell.accessoryImageView setImage:nil];
     }
-    
-    CGFloat bubbleTopLabelInset = 60.0f;
+
+    CGFloat bubbleTopLabelInset = (cell.avatarImageView != nil) ? 60.0f : 15.0f;
     
     if (isOutgoingMessage)
     {
@@ -459,8 +459,6 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     }
     
     cell.backgroundColor = [UIColor clearColor];
-
-    CGFloat bubbleTopLabelInset = (cell.avatarImageView != nil) ? 60.0f : 15.0f;
     
     if (isOutgoingMessage) {
         cell.messageBubbleTopLabel.textInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, bubbleTopLabelInset);

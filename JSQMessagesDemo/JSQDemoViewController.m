@@ -188,8 +188,8 @@ static NSString * const kJSQDemoAvatarNameWoz = @"Steve Wozniak";
      */
     [self scrollToBottomAnimated:YES];
     
-    
     JSQMessage *copyMessage = [[self.messages lastObject] copy];
+
     
     if (!copyMessage) {
         copyMessage = [JSQMessage messageWithText:@"First received!" sender:kJSQDemoAvatarNameJobs];
