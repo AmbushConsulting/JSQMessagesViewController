@@ -652,10 +652,8 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Hexed Bits";
 				TargetAttributes = {
-					885D592818CBD13D00D77BB3 = {
-						DevelopmentTeam = 5VRJU68BZ5;
-					};
 					885D594C18CBD13D00D77BB3 = {
+						DevelopmentTeam = 5VRJU68BZ5;
 						TestTargetID = 885D592818CBD13D00D77BB3;
 					};
 				};
@@ -1012,6 +1010,8 @@
 			baseConfigurationReference = A0F1B1EFE54F44FEA6C4F786 /* Pods.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JSQMessages.app/JSQMessages";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1025,6 +1025,7 @@
 				);
 				INFOPLIST_FILE = "JSQMessagesTests/JSQMessagesTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -1035,6 +1036,8 @@
 			baseConfigurationReference = A0F1B1EFE54F44FEA6C4F786 /* Pods.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JSQMessages.app/JSQMessages";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1044,6 +1047,7 @@
 				GCC_PREFIX_HEADER = "JSQMessagesDemo/JSQMessages-Prefix.pch";
 				INFOPLIST_FILE = "JSQMessagesTests/JSQMessagesTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};

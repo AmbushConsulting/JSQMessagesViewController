@@ -118,6 +118,8 @@
     self.textView.contentInset = UIEdgeInsetsZero;
     self.textView.scrollIndicatorInsets = UIEdgeInsetsZero;
     self.textView.contentOffset = CGPointZero;
+    self.textView.textContainerInset = UIEdgeInsetsZero;
+    self.textView.textContainer.lineFragmentPadding = 0;
     self.textView.linkTextAttributes = @{ NSForegroundColorAttributeName : [UIColor whiteColor],
                                           NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
     
@@ -206,6 +208,17 @@
 {
     [super setSelected:selected];
     self.messageBubbleImageView.highlighted = selected;
+}
+
+//  TODO: remove when fixed
+//        hack for Xcode6 / iOS 8 SDK rendering bug
+//        see issue #484
+//        https://github.com/jessesquires/JSQMessagesViewController/issues/484
+//
+- (void)setBounds:(CGRect)bounds
+{
+    [super setBounds:bounds];
+    self.contentView.frame = bounds;
 }
 
 #pragma mark - Setters

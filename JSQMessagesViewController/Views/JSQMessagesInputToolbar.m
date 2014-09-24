@@ -138,6 +138,8 @@ static void * kJSQMessagesInputToolbarKeyValueObservingContext = &kJSQMessagesIn
                                                         action:@selector(jsq_rightBarButtonPressed:)
                                               forControlEvents:UIControlEventTouchUpInside];
             }
+            
+            [self toggleSendButtonEnabled];
         }
     }
 }
