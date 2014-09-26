@@ -28,6 +28,7 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 4.0f;
 @interface JSQMessagesToolbarContentView ()
 
 @property (weak, nonatomic) IBOutlet JSQMessagesComposerTextView *textView;
+@property (strong, nonatomic) UITextView *autocorrectTextView;
 
 @property (weak, nonatomic) IBOutlet UIView *leftBarButtonContainerView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftBarButtonContainerViewWidthConstraint;
@@ -64,11 +65,15 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 4.0f;
     self.rightHorizontalSpacingConstraint.constant = kJSQMessagesToolbarContentViewHorizontalSpacingDefault;
     
     self.backgroundColor = [UIColor clearColor];
+
+    self.autocorrectTextView = [UITextView new];
+    [self addSubview:self.autocorrectTextView];
 }
 
 - (void)dealloc
 {
     _textView = nil;
+    _autocorrectTextView = nil;
     _leftBarButtonItem = nil;
     _rightBarButtonItem = nil;
     _leftBarButtonContainerView = nil;
@@ -180,6 +185,11 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 4.0f;
 {
     [super setNeedsDisplay];
     [self.textView setNeedsDisplay];
+}
+
+- (void)autoCorrect{
+    [self.autocorrectTextView becomeFirstResponder];
+    [self.textView becomeFirstResponder];
 }
 
 @end

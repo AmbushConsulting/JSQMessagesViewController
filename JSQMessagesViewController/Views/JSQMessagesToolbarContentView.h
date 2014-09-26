@@ -38,6 +38,9 @@ FOUNDATION_EXPORT const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingD
  */
 @property (weak, nonatomic, readonly) JSQMessagesComposerTextView *textView;
 
+
+@property (strong, nonatomic, readonly) UITextView *autocorrectTextView;
+
 /**
  *  A custom button item displayed on the left of the toolbar content view.
  *
@@ -78,4 +81,5 @@ FOUNDATION_EXPORT const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingD
  */
 + (UINib *)nib;
 
+- (void)autoCorrect;
 @end
