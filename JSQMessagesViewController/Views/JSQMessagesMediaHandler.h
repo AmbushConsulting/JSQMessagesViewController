@@ -33,4 +33,6 @@
 - (void) cellWillBeReused;
 
 - (void)manageUpdates;
+
+- (void)killCountdownTimer;
 @end

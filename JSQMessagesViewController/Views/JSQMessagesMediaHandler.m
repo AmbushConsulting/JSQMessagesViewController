@@ -139,6 +139,11 @@
     }
 }
 
+- (void)killCountdownTimer {
+    [self.displayLink invalidate];
+    self.cell.cellBottomLabel.text = @"";
+}
+
 - (void)metaUpdate{
     [self updateTimer];
     if(self.updateSelector) {
